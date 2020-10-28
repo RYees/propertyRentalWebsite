@@ -23,5 +23,3 @@ const propertySchema = new mongoose.Schema({
 propertySchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Property', propertySchema);
-
-//module.exports.fuzzySearch('Nodejs meetup').then(console.log).catch(console.error);
