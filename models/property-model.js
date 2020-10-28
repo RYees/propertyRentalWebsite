@@ -23,3 +23,4 @@ const propertySchema = new mongoose.Schema({
 propertySchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Property', propertySchema);
+
