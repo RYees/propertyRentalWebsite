@@ -74,7 +74,7 @@ exports.create = (req, res,next) => {
           prop_type:req.body.prop_type,
           address:req.body.address,
           price:req.body.price ,
-          image:req.file,
+          image:req.files.path,
           broker:req.body.brokerId
          
               });
