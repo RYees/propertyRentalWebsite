@@ -94,7 +94,7 @@ exports.create = (req, res,next) => {
 });
 res.status(201).json({
     message:'property was created',
-    //property:property
+    //property:propertyj
 });
  
 
