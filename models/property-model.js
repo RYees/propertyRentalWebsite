@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const bcrypt = require('bcrypt')
-//const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
+
 const propertySchema = new mongoose.Schema({
     //_id: mongoose.Schema.Types.ObjectId,
     bname: {type: String, default: ''},
