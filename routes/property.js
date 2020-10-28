@@ -33,7 +33,7 @@ const upload = multer({storage: storage,  limits : {fileSize : 1000000}
 router.get('/',propertyController.getAll);
 router.get('/search',propertyController.search);
 router.get('/:id',propertyController.get);
-router.post('/', upload.array("image",4), propertyController.create);
+router.post('/', upload.single("image"), propertyController.create);
 router.patch('/:id', propertyController.update);
 
 router.delete('/:id', propertyController.remove);

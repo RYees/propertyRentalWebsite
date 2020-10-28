@@ -69,17 +69,18 @@ exports.create = (req, res,next) => {
             });
         }
       const property = new propertyModel({
+         
           _id:mongoose.Types.ObjectId(),
           bname:req.body.bname ,
           prop_type:req.body.prop_type,
           address:req.body.address,
           price:req.body.price ,
-          image:req.files.path,
+          image:req.file.path,
           broker:req.body.brokerId
          
               });
       return property.save()
-        
+      console.log(req.file);
     })
     .then(result =>{
         console.log(result);
