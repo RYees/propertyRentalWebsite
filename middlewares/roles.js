@@ -10,7 +10,7 @@ exports.roles = async(req,res,next)=>{
          if(broker){
              broker.insertOne(
             { roles: ['broAct']}
-         )
+         )weg
        }
              throw new Error('you dont have broker role')
   
