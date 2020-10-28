@@ -28,7 +28,6 @@ const upload = multer({storage: storage,  limits : {fileSize : 1000000}
 //var upload = multer({storage: storage, limits: {fileSize: 1024 * 1024 * 5}, fileFilter:fileFilter});
 //var upload = multer({storage: storage});
 
-//router.get('/all',propertyController.All);
 
 router.get('/',propertyController.getAll);
 router.get('/search',propertyController.search);
