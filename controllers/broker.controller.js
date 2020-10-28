@@ -80,24 +80,3 @@ exports.remove = async (req, res) => {
         
     }
 }
-
-/*/
-try {
-
-    const broker = await brokerModel.create(req.body)
-    _id:mongoose.Types.ObjectId(),
-    bname:req.body.bname ,
-    username:req.body.username,
-    email:req.body.email,
-    password: req.body.password ,
-    phone: req.body.phone ,
-    address: req.body.address ,
-    photo : req.file.path,
-    broker:req.body.brokerId
-    res.json(broker)
-} catch (error) {
-    res.status(400).json({
-        error: true,
-        message: error
-    })
-}/*/
