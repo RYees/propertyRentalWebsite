@@ -19,11 +19,7 @@ const propertySchema = new mongoose.Schema({
     updated_at: { type: Date, default: new Date() }
 })
 
-// methods
-//propertySchema.index({'$**': 'text'});
-//propertySchema.plugin(mongoose_fuzzy_searching, {fields: ['bname']});
 
-// plugins
 propertySchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Property', propertySchema);
