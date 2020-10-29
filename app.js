@@ -13,6 +13,13 @@ const { routes } = require('./config/routes');
 
 const { hasPermissions } = require('./middlewares/auth');
 
+var serviceAccount = require("path/to/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://propertyrental-a9ade.firebaseio.com"
+});
+
 
 var bauthRouter = require('./routes/bauth');
 var AauthRouter = require('./routes/Aauth');
