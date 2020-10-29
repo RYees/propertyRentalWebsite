@@ -34,7 +34,7 @@ exports.create = async (req, res) => {
                 sub_city:req.body.sub_city,
                 city:req.body.city,
                 area:req.body.area
-             }] ,
+             }] ,            
              photo : req.file.path,
              
                  });
