@@ -71,7 +71,10 @@ exports.create = (req, res,next) => {
       const property = new propertyModel({
          
           _id:mongoose.Types.ObjectId(),
-          bname:req.body.bname ,
+          bname:[{
+              firstName:req.body.firstName,
+              lastName:req.body.lastName
+          }],
           prop_type:req.body.prop_type,
           address:req.body.address,
           price:req.body.price ,
