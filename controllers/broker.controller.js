@@ -30,7 +30,11 @@ exports.create = async (req, res) => {
              email:req.body.email,
              password: req.body.password ,
              phone: req.body.phone ,
-             address: req.body.address ,
+             address: [{
+                sub_city:req.body.sub_city,
+                city:req.body.city,
+                area:req.body.area
+             }] ,
              photo : req.file.path,
              
                  });

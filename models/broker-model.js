@@ -5,11 +5,16 @@ const bcrypt = require('bcrypt')
 //const Notification = require('./Notification-model.js').Notification;
 const reqString = {
   type:String,
-  required:false
+  required:true
 }
 const bnameSchema = new mongoose.Schema({
   firstName: reqString,
   lastName: reqString
+})
+const addressSchema = new mongoose.Schema({
+        sub_city:reqString,
+        city:reqString,
+        area:reqString
 })
 const brokerSchema = new mongoose.Schema({
   
@@ -18,7 +23,7 @@ const brokerSchema = new mongoose.Schema({
     username: { type: String, default: '' },
     email: { type: String, unique: true, trim: true, lowercase: true, required: true},
     phone: { type: String, default: '' },
-    address: {type: String, default: '' },
+    address: [addressSchema],
     photo: { type: String, default:'' },
     password: { type: String, required: true, minlength: 8, maxlength: 128},
     password_changed_at: { type: Date },
