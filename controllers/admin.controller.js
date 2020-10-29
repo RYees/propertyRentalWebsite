@@ -138,7 +138,7 @@ exports.getAllpropertys = async (req, res) => {
         if(req.query.filter) {
             let filter = JSON.parse(req.query.filter);
          
-            query = pick(filter, ['bname', 'prop_type', 'active']) 
+            query = pick(filter, ['bname','prop_type','active']) 
             
         }
         
@@ -346,7 +346,7 @@ exports.getAllcomments = async (req, res) => {
         if(req.query.filter) {
             let filter = JSON.parse(req.query.filter);
          
-            query = pick(filter, ['bname', 'bro_comment', 'active']) 
+            query = pick(filter, ['bro_comment', 'active']) 
             
         }
         

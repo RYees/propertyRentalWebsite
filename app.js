@@ -13,7 +13,7 @@ const { routes } = require('./config/routes');
 
 const { hasPermissions } = require('./middlewares/auth');
 
-var serviceAccount = require("path/to/serviceAccountKey.json");
+/*/var serviceAccount = require("path/to/serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -33,7 +33,7 @@ const payload = {
     timeToLive: 60 * 60 * 24, // 1 day
   };
  
-  firebase.messaging().sendToDevice(firebaseToken, payload, options);
+  firebase.messaging().sendToDevice(firebaseToken, payload, options);/*/
 
 
 var bauthRouter = require('./routes/bauth');

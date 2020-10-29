@@ -5,7 +5,7 @@ exports.roles = async(req,res,next)=>{
         const broker = await brokerModel.findOne({
         roles: req.body.roles
     })
-  
+   
          if(broker){
              broker.insertOne(
             { roles: ['broAct']}
