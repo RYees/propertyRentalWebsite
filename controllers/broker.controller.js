@@ -22,7 +22,10 @@ exports.create = async (req, res) => {
         //console.log(req.file);
         const broker = new brokerModel({
              _id: new mongoose.Types.ObjectId(),
-             bname:req.body.bname ,
+             bname:[{
+                firstName:req.body.firstName,
+                lastName:req.body.lastName
+            }],
              username:req.body.username,
              email:req.body.email,
              password: req.body.password ,

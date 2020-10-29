@@ -3,10 +3,18 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const bcrypt = require('bcrypt')
 //const Notification = require('./Notification-model.js').Notification;
+const reqString = {
+  type:String,
+  required:false
+}
+const bnameSchema = new mongoose.Schema({
+  firstName: reqString,
+  lastName: reqString
+})
 const brokerSchema = new mongoose.Schema({
   
     //_id: mongoose.Schema.Types.ObjectId,
-    bname:{type: String, default: '' },
+    bname: [bnameSchema],
     username: { type: String, default: '' },
     email: { type: String, unique: true, trim: true, lowercase: true, required: true},
     phone: { type: String, default: '' },
