@@ -25,6 +25,10 @@ const brokerSchema = new mongoose.Schema({
     phone: { type: String, default: '' },
     address: [addressSchema],
     photo: { type: String, default:'' },
+    company: { type: String, default:'' },
+    about: { type: String, default:'' },
+    rating: { type: String, default:'' },
+    favorites: { type: String, default:'' },
     password: { type: String, required: true, minlength: 8, maxlength: 128},
     password_changed_at: { type: Date },
     active: { type: Boolean, default: false },
@@ -37,18 +41,7 @@ const brokerSchema = new mongoose.Schema({
     updated_at: { type: Date, default: new Date() }
 })
 
-// methods
-/*
-brokerSchema.post('save', function(doc) {
-  var NewData = new Notification({
-      broker_id: doc._id,
-      text: "new Broker Registered"
-  });
 
-  NewData.save(function(err, notification_data) {
-      // any error logging or other operations
-  });
-});/*/
 brokerSchema.pre('save', function preSave(next) {
     let model = this
 
