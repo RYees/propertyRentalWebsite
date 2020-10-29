@@ -5,6 +5,7 @@ var logger = require('morgan');
 var jwt = require('express-jwt');
 var fs = require('fs');
 var multer = require('multer');
+var admin = require("firebase-admin");
 
 const mongoose = require('./config/mongoose');
 const { jwt_key, port } = require('./config/vars');
