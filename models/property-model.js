@@ -14,18 +14,18 @@ const reqString = {
     bedrooms: reqString,
     bathrooms: reqString,
     no_of_floors: reqString,
-    amenities: reqString,
+    amenities: {type: String, default: ''}
   })
   const addressSchema = new mongoose.Schema({
     sub_city:reqString,
     city:reqString,
     area:reqString,
-    coordinates:reqString
+    coordinates:{type: String, default: ''}
 })
 const propertySchema = new mongoose.Schema({
     //_id: mongoose.Schema.Types.ObjectId,
     prop_type: {type: String, default: ''},
-    address: { type: String, default: '' },
+    address: [addressSchema],
     price: [priceSchema],
     image: { type: String, default:'' },
     prop_contents:[hcontentSchema],

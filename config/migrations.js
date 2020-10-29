@@ -71,18 +71,7 @@ const brokers = [
 ]
 
 const propertys = [
-    {
-        bname:[
-            {
-                firstName: 'abebe',
-                lastName: 'beso'
-            }
-        ],
-        prop_type:'house',
-        price:'5900',
-       // brokerId:'5f9584ffd004ba6dbc7bcdce'
-        
-    }
+  
 ]
 const comments = []
 
