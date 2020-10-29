@@ -20,6 +20,21 @@ admin.initializeApp({
   databaseURL: "https://propertyrental-a9ade.firebaseio.com"
 });
 
+ 
+const payload = {
+    notification: {
+      title: 'Notification Title',
+      body: 'This is an example notification',
+    }
+  };
+ 
+  const options = {
+    priority: 'high',
+    timeToLive: 60 * 60 * 24, // 1 day
+  };
+ 
+  firebase.messaging().sendToDevice(firebaseToken, payload, options);
+
 
 var bauthRouter = require('./routes/bauth');
 var AauthRouter = require('./routes/Aauth');
