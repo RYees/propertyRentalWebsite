@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 
 const propertySchema = new mongoose.Schema({
     //_id: mongoose.Schema.Types.ObjectId,
-    bname: {type: String, default: ''},
+    bname: [{firstName:{type: String, default: ''},lastName:{type: String, default: ''}}],
     prop_type: {type: String, default: ''},
     address: { type: String, default: '' },
     price: {type : String, default: ''},
