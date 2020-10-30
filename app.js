@@ -13,15 +13,15 @@ const { routes } = require('./config/routes');
 
 const { hasPermissions } = require('./middlewares/auth');
 
-/*/var serviceAccount = require("path/to/serviceAccountKey.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://propertyrental-a9ade.firebaseio.com"
-});
-
+const serviceAccount = require('./config/firebase/secret.json');
+const firebaseToken = 'abcdeabcdeabcde';
  
-const payload = {
+  firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount),
+    databaseURL: "https://PRW.firebaseio.com"
+  });
+ 
+  const payload = {
     notification: {
       title: 'Notification Title',
       body: 'This is an example notification',
@@ -33,7 +33,8 @@ const payload = {
     timeToLive: 60 * 60 * 24, // 1 day
   };
  
-  firebase.messaging().sendToDevice(firebaseToken, payload, options);/*/
+  firebase.messaging().sendToDevice(firebaseToken, payload, options);
+
 
 
 var bauthRouter = require('./routes/bauth');
