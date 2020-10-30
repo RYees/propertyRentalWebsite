@@ -5,7 +5,7 @@
 
 #run npm start
 
-#open it in and editor
+#open it in an editor
 
 #create a .env file
 
