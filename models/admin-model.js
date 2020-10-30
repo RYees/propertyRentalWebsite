@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const bcrypt = require('bcrypt')
 
+
 const adminSchema = new mongoose.Schema({
     //_id: mongoose.Schema.Types.ObjectId,
     name: {type: String, default: ''},
@@ -12,6 +13,7 @@ const adminSchema = new mongoose.Schema({
     password_changed_at: { type: Date },
     roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Roles' }],
     permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permissions' }],
+    fcm:{type:String,default:''},
     archived: { type: Boolean, default: false },
     last_login: { type: Date },
     created_at: { type: Date, default: new Date() },

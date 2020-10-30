@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 //const Notification = require('./Notification-model.js').Notification;
 const reqString = {
   type:String,
-  required:true
+  required:false
 }
 const bnameSchema = new mongoose.Schema({
   firstName: reqString,

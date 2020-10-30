@@ -11,27 +11,27 @@ exports.Allbrokers = async (req, res) => {
     try {
 
         let sort = {}
-        if(req.query.sort) {
-            sort[req.query.sort] = req.query.asc ? 1 :-1 
+        if (req.query.sort) {
+            sort[req.query.sort] = req.query.asc ? 1 : -1
         }
 
         let query = {}
 
-        if(req.query.filter) {
+        if (req.query.filter) {
             let filter = JSON.parse(req.query.filter);
-            query = pick(filter, ['username', 'email', 'active']) 
-            
+            query = pick(filter, ['username', 'email', 'active'])
+
         }
-        
+
         const options = {
-            sort: Object.values(sort).length > 0 ? sort: {
+            sort: Object.values(sort).length > 0 ? sort : {
                 'created_at': -1
             },
             page: req.query.page || 1,
             limit: req.query.limit || 10,
-            populate: { path: 'roles', populate: {path: 'permissions'}}
+            populate: { path: 'roles', populate: { path: 'permissions' } }
         }
-        const brokers = await brokerModel.paginate(query,options)
+        const brokers = await brokerModel.paginate(query, options)
 
         res.json(brokers)
 
@@ -41,7 +41,7 @@ exports.Allbrokers = async (req, res) => {
             message: error.message
         })
     }
-    
+
 }
 
 exports.getbroker = async (req, res) => {
@@ -86,15 +86,15 @@ exports.updatebroker = async (req, res) => {
 
     try {
         let broker = await brokerModel.findById(req.params.id)
-        if(broker) {
-            broker = await brokerModel.updateOne({_id: broker._id}, req.body)
+        if (broker) {
+            broker = await brokerModel.updateOne({ _id: broker._id }, req.body)
             return res.json(broker)
         }
 
         throw new Error('User dosen\'t exist')
-       
 
-        
+
+
     } catch (error) {
         res.status(400).json({
             error: true,
@@ -106,7 +106,7 @@ exports.updatebroker = async (req, res) => {
 exports.removebroker = async (req, res) => {
     try {
         let broker = await brokerModel.findById(req.params.id)
-        if(broker) {
+        if (broker) {
             await brokerModel.remove({
                 _id: broker._id
             })
@@ -115,7 +115,7 @@ exports.removebroker = async (req, res) => {
         throw new Error('User doesn\t exist')
 
     } catch (error) {
-        
+
     }
 }
 
@@ -129,28 +129,28 @@ exports.getAllpropertys = async (req, res) => {
     try {
 
         let sort = {}
-        if(req.query.sort) {
-            sort[req.query.sort] = req.query.asc ? 1 :-1 
+        if (req.query.sort) {
+            sort[req.query.sort] = req.query.asc ? 1 : -1
         }
 
         let query = {}
 
-        if(req.query.filter) {
+        if (req.query.filter) {
             let filter = JSON.parse(req.query.filter);
-         
-            query = pick(filter, ['bname','prop_type','active']) 
-            
+
+            query = pick(filter, ['bname', 'prop_type', 'active'])
+
         }
-        
+
         const options = {
-            sort: Object.values(sort).length > 0 ? sort: {
+            sort: Object.values(sort).length > 0 ? sort : {
                 'created_at': -1
             },
             page: req.query.page || 1,
             limit: req.query.limit || 10,
-            populate: { path: 'broker'}
+            populate: { path: 'broker' }
         }
-        const propertys = await propertyModel.paginate(query,options)
+        const propertys = await propertyModel.paginate(query, options)
 
         res.json(propertys)
 
@@ -160,70 +160,70 @@ exports.getAllpropertys = async (req, res) => {
             message: error.message
         })
     }
-    
+
 }
 
-exports.getproperty =  (req, res) => {
+exports.getproperty = (req, res) => {
     const property = propertyModel.findById(req.params.id)
-    .select("broker  _id  bname  prop_type  address  price ")
-    .populate('broker', 'bname')
-    .exec()
-    .then(property=>{
-        if(!property){
-            return res.status(404).json({
-                message:"Property not found"
+        .select("broker  _id  bname  prop_type  address  price ")
+        .populate('broker', 'bname')
+        .exec()
+        .then(property => {
+            if (!property) {
+                return res.status(404).json({
+                    message: "Property not found"
+                });
+            }
+            res.status(200).json({
+                property: property,
             });
-        }
-        res.status(200).json({
-            property:property,
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+                //message: error.message
+            });
         });
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({
-            error: err
-            //message: error.message
-        });
-    });
 }
 
-exports.createproperty = (req, res,next) => {
-  
-     brokerModel.findById(req.body.brokerId)
-    .then(broker => {
-        if(!broker){
-            return res.status(404).json({
-                message:'Broker not found'
+exports.createproperty = (req, res, next) => {
+
+    brokerModel.findById(req.body.brokerId)
+        .then(broker => {
+            if (!broker) {
+                return res.status(404).json({
+                    message: 'Broker not found'
+                });
+            }
+            const property = new propertyModel({
+                _id: mongoose.Types.ObjectId(),
+                bname: req.body.bname,
+                prop_type: req.body.prop_type,
+                address: req.body.address,
+                price: req.body.price,
+                image: req.file.path,
+                broker: req.body.brokerId
             });
-        }
-      const property = new propertyModel({
-          _id:mongoose.Types.ObjectId(),
-          bname:req.body.bname ,
-          prop_type:req.body.prop_type,
-          address:req.body.address,
-          price: req.body.price ,
-          image : req.file.path,
-          broker:req.body.brokerId
-             });
-      return property.save()
-        
-    })
-    .then(result =>{
-        console.log(result);
-        res.status(201).json(result);
-    })
-   // res.json(property)
-   .catch(err=>{
-    console.log(err);
-    res.status(500).json({
-        error:err
+            return property.save()
+
+        })
+        .then(result => {
+            console.log(result);
+            res.status(201).json(result);
+        })
+        // res.json(property)
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+    res.status(201).json({
+        message: 'property was created',
+        //property:property
     });
-});
-res.status(201).json({
-    message:'property was created',
-    //property:property
-});
- 
+
 
 }
 
@@ -231,15 +231,15 @@ exports.updatestatus = async (req, res) => {
 
     try {
         let broker = await brokerModel.findById(req.params.id)
-        if(broker) {
-            broker = await brokerModel.updateOne({_id:broker._id,active: broker.active},)
+        if (broker) {
+            broker = await brokerModel.updateOne({ _id: broker._id, active: broker.active },)
             return res.json(broker)
         }
 
         throw new Error('Broker dosen\'t exist')
-       
 
-        
+
+
     } catch (error) {
         res.status(400).json({
             error: true,
@@ -253,15 +253,15 @@ exports.updateproperty = async (req, res) => {
 
     try {
         let property = await propertyModel.findById(req.params.id)
-        if(property) {
-            property = await propertyModel.updateOne({_id: property._id}, req.body)
+        if (property) {
+            property = await propertyModel.updateOne({ _id: property._id }, req.body)
             return res.json(property)
         }
 
         throw new Error('User dosen\'t exist')
-       
 
-        
+
+
     } catch (error) {
         res.status(400).json({
             error: true,
@@ -273,7 +273,7 @@ exports.updateproperty = async (req, res) => {
 exports.removeproperty = async (req, res) => {
     try {
         let property = await propertyModel.findById(req.params.id)
-        if(property) {
+        if (property) {
             await propertyModel.remove({
                 _id: property._id
             })
@@ -282,24 +282,24 @@ exports.removeproperty = async (req, res) => {
         throw new Error('User doesn\t exist')
 
     } catch (error) {
-        
+
     }
 }
 
 
-exports.searchproperty = async (req, res,next) => {
+exports.searchproperty = async (req, res, next) => {
     try {
-          //const property = propertyModel.createIndexes({bname:"text"})
-          //$match: { $text: { $search: "cake" } } }
+        //const property = propertyModel.createIndexes({bname:"text"})
+        //$match: { $text: { $search: "cake" } } }
         //let property = await propertyModel.aggregate([{$match: { $text: { $search: "for" } }} ,])
         //const property = await propertyModel.findById(req.params.id)
         const searchedFEILD = req.query.bname;
-        await propertyModel.find({bname:{$regex: searchedFEILD,$options: '$i'}})
-        .then(data=>{
-            res.send(data);
-        //res.json(property)
-    });
-   } catch (error) {
+        await propertyModel.find({ bname: { $regex: searchedFEILD, $options: '$i' } })
+            .then(data => {
+                res.send(data);
+                //res.json(property)
+            });
+    } catch (error) {
         res.status(404).json({
             error: true,
             message: error.message
@@ -307,27 +307,27 @@ exports.searchproperty = async (req, res,next) => {
     }
 }
 
-exports.searchbroker = async (req, res,next) => {
+exports.searchbroker = async (req, res, next) => {
     try {
-          //const property = propertyModel.createIndexes({bname:"text"})
-          //$match: { $text: { $search: "cake" } } }
+        //const property = propertyModel.createIndexes({bname:"text"})
+        //$match: { $text: { $search: "cake" } } }
         //let property = await propertyModel.aggregate([{$match: { $text: { $search: "for" } }} ,])
         //const property = await propertyModel.findById(req.params.id)
         const searchedFEILD = req.query.bname;
-        await brokerModel.find({bname:{$regex: searchedFEILD,$options: '$i'}})
-        .then(data=>{
-            res.send(data);
-        //res.json(property)
-    });
-   } catch (error) {
+        await brokerModel.find({ bname: { $regex: searchedFEILD, $options: '$i' } })
+            .then(data => {
+                res.send(data);
+                //res.json(property)
+            });
+    } catch (error) {
         res.status(404).json({
             error: true,
             message: error.message
         })
     }
 }
- 
- 
+
+
 
 
 
@@ -337,28 +337,28 @@ exports.getAllcomments = async (req, res) => {
     try {
 
         let sort = {}
-        if(req.query.sort) {
-            sort[req.query.sort] = req.query.asc ? 1 :-1 
+        if (req.query.sort) {
+            sort[req.query.sort] = req.query.asc ? 1 : -1
         }
 
         let query = {}
 
-        if(req.query.filter) {
+        if (req.query.filter) {
             let filter = JSON.parse(req.query.filter);
-         
-            query = pick(filter, ['bro_comment', 'active']) 
-            
+
+            query = pick(filter, ['bro_comment', 'active'])
+
         }
-        
+
         const options = {
-            sort: Object.values(sort).length > 0 ? sort: {
+            sort: Object.values(sort).length > 0 ? sort : {
                 'created_at': -1
             },
             page: req.query.page || 1,
             limit: req.query.limit || 10,
-            populate: { path: 'broker'}
+            populate: { path: 'broker' }
         }
-        const comments = await commentModel.paginate(query,options)
+        const comments = await commentModel.paginate(query, options)
 
         res.json(comments)
 
@@ -368,66 +368,66 @@ exports.getAllcomments = async (req, res) => {
             message: error.message
         })
     }
-    
+
 }
 
-exports.getcomment =  (req, res) => {
+exports.getcomment = (req, res) => {
     const comment = commentModel.findById(req.params.id)
-    .select("broker  _id  bro_comment ")
-    .populate('broker', 'bname')
-    .exec()
-    .then(comment=>{
-        if(!comment){
-            return res.status(404).json({
-                message:"comment not found"
+        .select("broker  _id  bro_comment ")
+        .populate('broker', 'bname')
+        .exec()
+        .then(comment => {
+            if (!comment) {
+                return res.status(404).json({
+                    message: "comment not found"
+                });
+            }
+            res.status(200).json({
+                comment: comment,
             });
-        }
-        res.status(200).json({
-            comment:comment,
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+                //message: error.message
+            });
         });
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({
-            error: err
-            //message: error.message
-        });
-    });
 }
 
-exports.createcomment = (req, res,next) => {
-  
-     brokerModel.findById(req.body.brokerId)
-    .then(broker => {
-        if(!broker){
-            return res.status(404).json({
-                message:'Broker not found'
+exports.createcomment = (req, res, next) => {
+
+    brokerModel.findById(req.body.brokerId)
+        .then(broker => {
+            if (!broker) {
+                return res.status(404).json({
+                    message: 'Broker not found'
+                });
+            }
+            const comment = new commentModel({
+                _id: mongoose.Types.ObjectId(),
+                bro_comment: req.body.bro_comment,
+                broker: req.body.brokerId
             });
-        }
-      const comment = new commentModel({
-        _id:mongoose.Types.ObjectId(),
-        bro_comment:req.body.bro_comment,
-        broker:req.body.brokerId
-             });
-      return comment.save()
-        
-    })
-    .then(result =>{
-        console.log(result);
-        res.status(201).json(result);
-    })
-   // res.json(comment)
-   .catch(err=>{
-    console.log(err);
-    res.status(500).json({
-        error:err
+            return comment.save()
+
+        })
+        .then(result => {
+            console.log(result);
+            res.status(201).json(result);
+        })
+        // res.json(comment)
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+    res.status(201).json({
+        message: 'comment was created',
+        //comment:comment
     });
-});
-res.status(201).json({
-    message:'comment was created',
-    //comment:comment
-});
- 
+
 
 }
 
@@ -435,15 +435,15 @@ exports.updatecomment = async (req, res) => {
 
     try {
         let comment = await commentModel.findById(req.params.id)
-        if(comment) {
-            comment = await commentModel.updateOne({_id: comment._id}, req.body)
+        if (comment) {
+            comment = await commentModel.updateOne({ _id: comment._id }, req.body)
             return res.json(comment)
         }
 
         throw new Error('comment dosen\'t exist')
-       
 
-        
+
+
     } catch (error) {
         res.status(400).json({
             error: true,
@@ -455,7 +455,7 @@ exports.updatecomment = async (req, res) => {
 exports.removecomment = async (req, res) => {
     try {
         let comment = await commentModel.findById(req.params.id)
-        if(comment) {
+        if (comment) {
             await commentModel.remove({
                 _id: comment._id
             })
@@ -464,7 +464,21 @@ exports.removecomment = async (req, res) => {
         throw new Error('comment doesn\t exist')
 
     } catch (error) {
-        
+
     }
 }
 
+exports.savefcm = async (req, res) => {
+    try {
+        const { fcm } = req.body
+        const { id } = req.params
+        let admin = await adminModel.findById(id)
+
+        admin.fcm = fcm
+        await admin.save()
+        res.json({ message: "updated" })
+
+    } catch {
+
+    }
+}

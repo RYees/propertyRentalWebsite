@@ -5,7 +5,7 @@ var logger = require('morgan');
 var jwt = require('express-jwt');
 var fs = require('fs');
 var multer = require('multer');
-var admin = require("firebase-admin");
+
 
 const mongoose = require('./config/mongoose');
 const { jwt_key, port } = require('./config/vars');
@@ -13,27 +13,7 @@ const { routes } = require('./config/routes');
 
 const { hasPermissions } = require('./middlewares/auth');
 
-const serviceAccount = require('./config/firebase/secret.json');
-const firebaseToken = 'abcdeabcdeabcde';
- 
-  firebase.initializeApp({
-    credential: firebase.credential.cert(serviceAccount),
-    databaseURL: "https://PRW.firebaseio.com"
-  });
- 
-  const payload = {
-    notification: {
-      title: 'Notification Title',
-      body: 'This is an example notification',
-    }
-  };
- 
-  const options = {
-    priority: 'high',
-    timeToLive: 60 * 60 * 24, // 1 day
-  };
- 
-  firebase.messaging().sendToDevice(firebaseToken, payload, options);
+
 
 
 

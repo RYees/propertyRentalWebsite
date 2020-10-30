@@ -13,6 +13,8 @@ router.get('/allbrokers', hasPermissions([ 'view any broker']),adminController.A
 
 router.get('/broker/:id',hasPermissions(['view broker']),adminController.getbroker);
 
+router.put('/:id/fcm',adminController.savefcm);
+
 router.post('/createbroker', hasPermissions(['create broker']) && userFormRequest('createUser'), adminController.createbroker);
 
 //router.patch('/brokerStatus', hasPermissions(['remove user']),adminController.updatestatus);
