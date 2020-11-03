@@ -59,9 +59,9 @@ exports.get =  (req, res) => {
     });
 }
 
-exports.create = (req, res,next) => {
+exports.create = (req, res, next) => {
   
-     brokerModel.findById(req.body.brokerId)
+      brokerModel.findById(req.body.brokerId)
     .then(broker => {
         if(!broker){
             return res.status(404).json({
@@ -116,18 +116,21 @@ res.status(201).json({
 
 }
 exports.search = async (req,res)=>{
- 
-    const query= req.query.prop_type || req.query.bname || req.query.address || req.query.price;
+  //let firsName = bname.fristName
+  //let sub_city = address.sub_city
+    const query= req.query.prop_type || req.query.sub_city || req.query.city
+     || req.query.area || req.query.firstName;
     //const que=req.query.bname;
     propertyModel.find({
     $or: [
-            { prop_type: { $regex: query, $options: '$i' } },
-            { bname: { $regex: query, $options: '$i' } },
-            { address: { $regex: query, $options: '$i' } },
-            { price: { $regex: query, $options: '$i' } }
+            { "prop_type": { $regex: query, $options: '$i' } },
+            { "address.sub_city" : { $regex: query, $options: '$i' } },
+            { "address.city": { $regex: query, $options: '$i' } },
+            { "address.area": { $regex: query, $options: '$i' } }
+           // { "bname.firstName": { $regex: query, $options: '$i' } }
             
         ]
-    }) .select("bname  prop_type  address  price  image ")
+    }) .select("prop_type  image")
        .then(data=>{
        res.send(data);
    }) 

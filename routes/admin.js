@@ -15,9 +15,9 @@ router.get('/broker/:id',hasPermissions(['view broker']),adminController.getbrok
 
 router.put('/:id/fcm',adminController.savefcm);
 
-router.post('/createbroker', hasPermissions(['create broker']) && userFormRequest('createUser'), adminController.createbroker);
+router.post('/createbroker', hasPermissions(['create broker']),adminController.createbroker);
 
-//router.patch('/brokerStatus', hasPermissions(['remove user']),adminController.updatestatus);
+//router.patch('/brokerStatus', hasPermissions(['remove user'])&& userFormRequest('createUser'),adminController.updatestatus);
 
 router.patch('/broker/:id', hasPermissions(['update broker']), adminController.updatebroker);
 
@@ -29,7 +29,7 @@ router.get('/getallproperty', hasPermissions([ 'view property']),adminController
 
 router.get('/property/:id', hasPermissions(['view property']),adminController.getproperty);
 
-router.post('/createproperty', hasPermissions(['create property']), adminController.createproperty);
+//router.post('/createproperty', hasPermissions(['create property']), adminController.createproperty);
 
 router.patch('/property/:id', hasPermissions(['update property']), adminController.updateproperty);
 
