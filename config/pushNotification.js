@@ -26,8 +26,7 @@ const notification = (message) => {
                 console.log(error);
             });
 
-    } catch(error ) 
-    {
+    } catch (error) {
         console.log(error);
     };
 
