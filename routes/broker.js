@@ -40,11 +40,11 @@ var upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 }, f
 
 router.get('/profile', hasPermissions(['view broker']), brokerController.profile);
 
-router.post('/', upload.single('photo'), hasPermissions(['view broker']), brokerController.create);
+//router.post('/', upload.single('photo'), hasPermissions(['view broker']), brokerController.create);
 
-router.patch('/:id', hasPermissions(['update broker']), brokerController.update);
+router.patch('/personalInfo', hasPermissions(['update broker']), brokerController.update);
 
-router.delete('/:id', hasPermissions(['remove broker']), brokerController.remove);
+router.delete('/deleteAccount', hasPermissions(['remove broker']), brokerController.remove);
 
 router.post('/createproperty', hasPermissions(['view broker']),upload.single("image"),brokerController.createproperty);
 

@@ -63,6 +63,21 @@ const admins = [
         email: 'bety@admin.com',
         password: 'superuser',
         roles: ['admin']
+    },
+    {
+        name: 'b',
+        username: 'bety',
+        email: 'be@admin.com',
+        password: 'superuser',
+        roles: ['admin']
+    }
+    ,
+    {
+        name: 'bo',
+        username: 'bop',
+        email: 'bep@admin.com',
+        password: 'superuser',
+        roles: ['admin']
     }
 ]
 const brokers = []

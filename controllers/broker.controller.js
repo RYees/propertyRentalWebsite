@@ -19,46 +19,10 @@ exports.profile = async (req, res) => {
 
 }
 
-exports.create = async (req, res) => {
-    try {
-        console.log(req.file);
-      let model= new roleModel({_id: new mongoose.Types.ObjectId('5f95908700c2d06190da0e33')})
-            const broker = new brokerModel({
-            _id: new mongoose.Types.ObjectId(),
-            bname: [{
-                firstName: req.body.firstName,
-                lastName: req.body.lastName
-            }],
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            phone: req.body.phone,
-            address: [{
-                sub_city: req.body.sub_city,
-                city: req.body.city,
-                area: req.body.area
-            }],
-            photo: req.file.path,
-            roles:model._id
-        });
-        
-        await broker.save()
-
-        res.json(broker)
-    } catch (error) {
-        res.status(400).json({
-            error: true,
-            message: error.message
-        })
-    }
-
-
-}
-
 exports.update = async (req, res) => {
 
     try {
-        let broker = await brokerModel.findById(req.params.id)
+        let broker = await brokerModel.findById(req.user._id)
         if (broker) {
             broker = await brokerModel.updateOne({ _id: broker._id }, req.body)
             return res.json(broker)
@@ -78,7 +42,7 @@ exports.update = async (req, res) => {
 
 exports.remove = async (req, res) => {
     try {
-        let broker = await brokerModel.findById(req.params.id)
+        let broker = await brokerModel.findById(req.user._id)
         if (broker) {
             await brokerModel.remove({
                 _id: broker._id
@@ -153,7 +117,7 @@ exports.searchproperty = async (req, res) => {
 exports.updateproperty = async (req, res) => {
 
     try {
-        let property = await propertyModel.findById(req.params.id)
+        let property = await propertyModel.findById(req.user._id)
         if (property) {
             property = await propertyModel.updateOne({ _id: property._id }, req.body)
             return res.json(property)
@@ -173,7 +137,7 @@ exports.updateproperty = async (req, res) => {
 
 exports.removeproperty = async (req, res) => {
     try {
-        let property = await propertyModel.findById(req.params.id)
+        let property = await propertyModel.findById(req.user._id)
         if (property) {
             await propertyModel.remove({
                 _id: property._id

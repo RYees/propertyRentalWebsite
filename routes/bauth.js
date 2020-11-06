@@ -1,5 +1,4 @@
 var router = require("express-promise-router")();
-
 var fs = require('fs');
 var multer = require('multer');
 const brokerModel = require("../models/broker-model");
@@ -24,7 +23,7 @@ const fileFilter = (req, file, cb) => {
 var upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 }, fileFilter: fileFilter });
 //const  {authFormRequest} = require('../middlewares/form-request/auth')
 const bauthController = require('../controllers/bauth.controller')
-//const { roles } = require('../middlewares/roles');
+
 /* GET users listing. */
 router.post('/login', bauthController.login);
 router.post('/signup',bauthController.signup);

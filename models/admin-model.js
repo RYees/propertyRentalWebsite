@@ -23,11 +23,15 @@ const adminSchema = new mongoose.Schema({
 
 adminSchema.pre('save', function preSave(next) {
   let model = this
-
+if(model.isModified('password')){
   model.hashPasswd(model.password, (err, hash) => {
     model.password = hash
     next()
   })
+}
+ else{
+   next()
+ }
 })
 
 
