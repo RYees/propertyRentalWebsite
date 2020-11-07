@@ -94,10 +94,8 @@ exports.signup = async (req, res) => {
 
 exports.logout = async (req, res) => {
     try {
-
-        const broker = await brokerModel.create(req.body)
-        // clean up
-        res.json(broker)
+        req.logout();
+        res.redirect( "/bauth/login" );
     } catch (error) {
         res.status(400).json({
             error: true,

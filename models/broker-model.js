@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const reqString = {
   type: String,
   required: true

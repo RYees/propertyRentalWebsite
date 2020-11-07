@@ -316,7 +316,7 @@ exports.updatestatus = async (req, res) => {
     try {
         let broker = await brokerModel.findById(req.params.id)
         if (broker) {
-            broker = await brokerModel.updateOne({ _id: broker._id, active: "true" })
+            broker = await brokerModel.updateOne({active:true})
             return res.json(broker)
         }
 
@@ -327,9 +327,25 @@ exports.updatestatus = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             error: true,
-            message: error
+            message: error.message
         })
     }
+}
+
+exports.put = async (req, res) => {
+    //const broker = await brokerModel.findById(req.params.id)
+    const broker = await brokerModel.findOne({
+        _id: req.params.id , active:"false"
+    })
+       // console.log(foundUser.active);
+         if (broker.active) {
+            broker.update({_id: req.params.id}, {$set: {active: true}});
+            return res.json(broker)
+        } else {
+           broker.update({_id: req.params.id}, {$set: {active: false}});
+           return res.json(broker)
+        }
+    
 }
 
 

@@ -46,13 +46,13 @@ router.patch('/personalInfo', hasPermissions(['update broker']), brokerControlle
 
 router.delete('/deleteAccount', hasPermissions(['remove broker']), brokerController.remove);
 
-router.get('/getproperty', hasPermissions(['remove broker']), brokerController.getproperty);
+router.get('/getproperty', hasPermissions(['view property']), brokerController.getproperty);
 
-router.post('/createproperty', hasPermissions(['view broker']),upload.single("image"),brokerController.createproperty);
+router.post('/createproperty', hasPermissions(['create property']),upload.single("image"),brokerController.createproperty);
 
-router.patch('/updateproperty/:id',hasPermissions(['view broker']),brokerController.updateproperty);
+router.patch('/updateproperty/:id',hasPermissions(['update property']),brokerController.updateproperty);
 
-router.delete('/deleteproperty/:id', hasPermissions(['view broker']),brokerController.removeproperty);
+router.delete('/deleteproperty/:id', hasPermissions(['remove property']),brokerController.removeproperty);
 
 
 module.exports = router;
