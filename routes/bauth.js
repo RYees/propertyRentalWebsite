@@ -26,6 +26,6 @@ const bauthController = require('../controllers/bauth.controller')
 
 /* GET users listing. */
 router.post('/login', bauthController.login);
-router.post('/signup',bauthController.signup);
+router.post('/signup',upload.single("photo"),bauthController.signup);
 
 module.exports = router;

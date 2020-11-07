@@ -46,6 +46,8 @@ router.patch('/personalInfo', hasPermissions(['update broker']), brokerControlle
 
 router.delete('/deleteAccount', hasPermissions(['remove broker']), brokerController.remove);
 
+router.get('/getproperty', hasPermissions(['remove broker']), brokerController.getproperty);
+
 router.post('/createproperty', hasPermissions(['view broker']),upload.single("image"),brokerController.createproperty);
 
 router.patch('/updateproperty/:id',hasPermissions(['view broker']),brokerController.updateproperty);

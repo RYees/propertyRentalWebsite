@@ -5,6 +5,57 @@ const brokerModel = require('../models/broker-model')
 const propertyModel = require('../models/property-model')
 const mongoose = require('mongoose')
 
+exports.adminprofile = async (req, res) => {
+
+    try {
+        //console.log(req.params);
+        const admin = await adminModel.findById(req.user._id)
+        res.json(admin)
+    } catch (error) {
+        res.status(404).json({
+            error: true,
+            message: error.message
+        })
+    }
+
+}
+
+exports.profileupdate = async (req, res) => {
+
+    try {
+        let admin = await adminModel.findById(req.user._id)
+        if (admin) {
+            admin = await adminModel.updateOne({ _id: admin._id }, req.body)
+            return res.json(admin)
+        }
+
+        throw new Error('Admin dosen\'t exist')
+
+
+
+    } catch (error) {
+        res.status(400).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+
+exports.profileremove = async (req, res) => {
+    try {
+        let admin = await adminModel.findById(req.user._id)
+        if (admin) {
+            await adminModel.remove({
+                _id: admin._id
+            })
+            return res.json(admin)
+        }
+        throw new Error('Admin doesn\t exist')
+
+    } catch (error) {
+
+    }
+}
 
 exports.Allbrokers = async (req, res) => {
 

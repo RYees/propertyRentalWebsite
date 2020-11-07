@@ -4,7 +4,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 const bcrypt = require('bcrypt')
 const reqString = {
   type: String,
-  required: false
+  required: true
 }
 const priceSchema = new mongoose.Schema({
   amount: reqString,

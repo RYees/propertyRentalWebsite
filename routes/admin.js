@@ -6,6 +6,11 @@ const adminController = require('../controllers/admin.controller')
 
 //router.get('/',adminController.getadmin);
 
+router.get('/adminprofile', hasPermissions(['view profile']),adminController.adminprofile);
+
+router.patch('/updateInfo',  adminController.profileupdate);
+
+router.delete('/deleteAccount', hasPermissions(['remove account']), adminController.profileremove);
 
 
 
@@ -17,7 +22,7 @@ router.put('/:id/fcm', adminController.savefcm);
 
 router.post('/createbroker', hasPermissions(['create broker']), adminController.createbroker);
 
-router.patch('/brokerStatus', hasPermissions(['update broker']),adminController.updatestatus);
+router.patch('/brokerStatus', hasPermissions(['grant access']),adminController.updatestatus);
 
 router.patch('/broker/:id', hasPermissions(['update broker']), adminController.updatebroker);
 
@@ -25,7 +30,7 @@ router.delete('/broker/:id', hasPermissions(['remove broker']), adminController.
 
 
 
-router.get('/getallproperty', hasPermissions(['view property']), adminController.getAllpropertys);
+router.get('/getallproperty', hasPermissions(['view any property']), adminController.getAllpropertys);
 
 router.get('/property/:id', hasPermissions(['view property']), adminController.getproperty);
 
@@ -38,7 +43,7 @@ router.delete('/property/:id', hasPermissions(['remove property']), adminControl
 
 
 
-router.get('/getallcomment', hasPermissions(['view comment']), adminController.getAllcomments);
+router.get('/getallcomment', hasPermissions(['view any comment']), adminController.getAllcomments);
 
 router.get('/comment/:id', hasPermissions(['view comment']), adminController.getcomment);
 

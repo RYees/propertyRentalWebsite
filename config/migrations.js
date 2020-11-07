@@ -5,23 +5,23 @@ const permissions = [
     'view any broker',
     'view broker',
     'update broker',
-    'remove broker',
+    'remove account',
 
     'create property',
     'update property',
     'remove property',
-    'view property',
+    'view any property',
     'hold property',
 
-
+    'view property',
     'create comment',
     'view comment',
     'update comment',
     'remove comment',
 
-
+    'view any comment',
     'view profile',
-    'view posts',
+    'update profile',
     'grant access',
     'manage posts',
 
@@ -34,9 +34,9 @@ const roles = {
     property: [],
     broAct: [
         'create broker',
-        'view broker',
-        'update broker',
-        'remove broker',
+        'view profile',
+        'update profile',
+        'remove account',
 
         'create property',
         'update property',

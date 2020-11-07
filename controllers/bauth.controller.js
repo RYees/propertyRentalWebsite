@@ -9,13 +9,17 @@ const adminModel = require('../models/admin-model')
 
 
 exports.login = async (req, res) => {
-     try {
-        const broker = await brokerModel.findOne({
-            username: req.body.username
+
+    try {
+              const broker = await brokerModel.findOne({
+            username: req.body.username , active:"true"
         }).populate({ path: 'roles', populate: { path: 'permissions' } });
 
         if (broker && await broker.verifyPassword(req.body.password)) {
-                let permissions = broker._doc.roles.reduce((prev, next) => {
+            // 1. map through all roles
+            // 2. find each permissions inside the role
+            // 3. combine permissions
+            let permissions = broker._doc.roles.reduce((prev, next) => {
                 return [...prev, ...next.permissions.map(permission => permission.name)]
             }, [])
             broker._doc.permissions = Array.from(new Set([...broker._doc.permissions.map(v => v.name), ...permissions]))
@@ -27,8 +31,8 @@ exports.login = async (req, res) => {
             })
         }
 
-        throw new Error("Username/password not found")
-
+        throw new Error("Username/password doesn't exist or Please Contact Your Administrator to activate your account")
+    //}
     } catch (error) {
 
         res.status(400).json({
@@ -40,7 +44,7 @@ exports.login = async (req, res) => {
 }
 exports.signup = async (req, res) => {
     try {
-        console.log(req.file);
+        //console.log(req.file);
       let model= new roleModel({_id: new mongoose.Types.ObjectId('5f95908700c2d06190da0e33')})
             const broker = new brokerModel({
             _id: new mongoose.Types.ObjectId(),
