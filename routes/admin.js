@@ -8,7 +8,7 @@ const adminController = require('../controllers/admin.controller')
 
 router.get('/adminprofile', hasPermissions(['view profile']),adminController.adminprofile);
 
-router.patch('/updateInfo',  adminController.profileupdate);
+router.patch('/updateInfo', hasPermissions(['view broker']), adminController.profileupdate);
 
 router.delete('/deleteAccount', hasPermissions(['remove account']), adminController.profileremove);
 
@@ -18,7 +18,7 @@ router.get('/allbrokers', hasPermissions(['view any broker']), adminController.A
 
 router.get('/broker/:id', hasPermissions(['view broker']), adminController.getbroker);
 
-router.put('/:id/fcm', adminController.savefcm);
+router.put('/:id/fcm',hasPermissions(['view notification']), adminController.savefcm);
 
 router.post('/createbroker', hasPermissions(['create broker']), adminController.createbroker);
 

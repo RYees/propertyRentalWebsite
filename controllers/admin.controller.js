@@ -53,9 +53,13 @@ exports.profileremove = async (req, res) => {
         throw new Error('Admin doesn\t exist')
 
     } catch (error) {
-
+        res.status(400).json({
+            error: true,
+            message: error.message
+        })
     }
 }
+
 
 exports.Allbrokers = async (req, res) => {
 

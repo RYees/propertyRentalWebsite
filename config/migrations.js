@@ -24,6 +24,7 @@ const permissions = [
     'update profile',
     'grant access',
     'manage posts',
+    'view notification'
 
 
 ]
@@ -57,28 +58,7 @@ const admins = [
         password: 'superuser',
         roles: ['admin']
     },
-    {
-        name: 'bety',
-        username: 'bety',
-        email: 'bety@admin.com',
-        password: 'superuser',
-        roles: ['admin']
-    },
-    {
-        name: 'b',
-        username: 'bety',
-        email: 'be@admin.com',
-        password: 'superuser',
-        roles: ['admin']
-    }
-    ,
-    {
-        name: 'bo',
-        username: 'bop',
-        email: 'bep@admin.com',
-        password: 'superuser',
-        roles: ['admin']
-    }
+   
 ]
 const brokers = []
 
