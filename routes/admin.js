@@ -19,8 +19,6 @@ router.get('/broker/:id', hasPermissions(['view broker']), adminController.getbr
 
 router.put('/:id/fcm',hasPermissions(['view notification']), adminController.savefcm);
 
-router.post('/createbroker', hasPermissions(['create broker']), adminController.createbroker);
-
 router.patch('/brokerStatus/:id', hasPermissions(['grant access']),adminController.updatestatus);
 
 router.delete('/broker/:id', hasPermissions(['remove broker']), adminController.removebroker);

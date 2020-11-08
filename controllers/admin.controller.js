@@ -112,45 +112,6 @@ exports.getbroker = async (req, res) => {
     }
 
 }
-
-exports.createbroker = async (req, res) => {
-    try {
-        console.log(req.file);
-        const broker = new brokerModel({
-            _id: new mongoose.Types.ObjectId(),
-            bname: [{
-                firstName: req.body.firstName,
-                lastName: req.body.lastName
-            }],
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            phone: req.body.phone,
-            address: [{
-                sub_city: req.body.sub_city,
-                city: req.body.city,
-                area: req.body.area
-            }],
-            image: [{
-                photo:req.files[0] && req.files[0].path? req.files[0].path : '',
-                slip:req.files[1] && req.files[1].path? req.files[1].path : '',
-            }],
-
-        });
-        await broker.save()
-
-        res.json(broker)
-    } catch (error) {
-        res.status(400).json({
-            error: true,
-            message: error.message
-        })
-    }
-
-
-
-}
-
 exports.removebroker = async (req, res) => {
     try {
         let broker = await brokerModel.findById(req.params.id)
@@ -166,10 +127,6 @@ exports.removebroker = async (req, res) => {
 
     }
 }
-
-
-
-
 
 
 exports.getAllpropertys = async (req, res) => {

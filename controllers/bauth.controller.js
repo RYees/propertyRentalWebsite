@@ -69,20 +69,15 @@ exports.signup = async (req, res) => {
         });
         
         await broker.save()
-        //console.log("1")
         let admins = await adminModel.find({})
-        //console.log("2")
         let fcmIds = await Promise.all(admins.map(admin => admin.fcm))
-        //console.log(fcmIds)
         fcmIds = fcmIds.filter(el => el != null)
-        //console.log("3")
         let notifiation_obj = {
             title: "something",
             body: "something"
         }
         var message = { tokens: fcmIds, notification: notifiation_obj }
         notification(message)
-        //console.log("4")
         res.json(broker)
 
         } catch (error) {

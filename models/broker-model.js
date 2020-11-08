@@ -23,7 +23,7 @@ const brokerSchema = new mongoose.Schema({
 
   //_id: mongoose.Schema.Types.ObjectId,
   bname: [bnameSchema],
-  username: { type: String, default: '',required:true},
+  username: { type: String, default: '',required:true,unique: true},
   email: { type: String, unique: true, trim: true, lowercase: true, required: true},
   phone: { type: String, default: '',required:true},
   address: [addressSchema],
