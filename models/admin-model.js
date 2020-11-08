@@ -13,7 +13,7 @@ const adminSchema = new mongoose.Schema({
   roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Roles' }],
   permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permissions' }],
   fcm: { type: String, default: '' },
-  last_login: { type: Date },
+  last_login: { type: Date, default: new Date() },
   created_at: { type: Date, default: new Date() },
   updated_at: { type: Date, default: new Date() }
 })

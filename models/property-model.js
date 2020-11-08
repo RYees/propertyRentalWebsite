@@ -28,7 +28,6 @@ const imageSchema = new mongoose.Schema({
   image3: reqString,
   })
 const propertySchema = new mongoose.Schema({
-  //_id: mongoose.Schema.Types.ObjectId,
   prop_type: { type: String, default: '' },
   address: [addressSchema],
   price: [priceSchema],
@@ -37,9 +36,6 @@ const propertySchema = new mongoose.Schema({
   notes: { type: String, default: '' },
   area_in_m2: { type: String, required: true },
   broker: { type: mongoose.Schema.Types.ObjectId, ref: 'Broker', required: true },
-  active: { type: Boolean, default: true },
-  archived: { type: Boolean, default: false },
-  last_login: { type: Date },
   created_at: { type: Date, default: new Date() },
   updated_at: { type: Date, default: new Date() }
 })

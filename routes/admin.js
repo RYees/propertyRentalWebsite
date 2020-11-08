@@ -23,8 +23,6 @@ router.post('/createbroker', hasPermissions(['create broker']), adminController.
 
 router.patch('/brokerStatus/:id', hasPermissions(['grant access']),adminController.updatestatus);
 
-router.patch('/broker/:id', hasPermissions(['update broker']), adminController.updatebroker);
-
 router.delete('/broker/:id', hasPermissions(['remove broker']), adminController.removebroker);
 
 
@@ -32,10 +30,6 @@ router.delete('/broker/:id', hasPermissions(['remove broker']), adminController.
 router.get('/getallproperty', hasPermissions(['view any property']), adminController.getAllpropertys);
 
 router.get('/property/:id', hasPermissions(['view property']), adminController.getproperty);
-
-router.post('/createproperty', adminController.createproperty);
-
-router.patch('/property/:id', hasPermissions(['update property']), adminController.updateproperty);
 
 router.delete('/property/:id', hasPermissions(['remove property']), adminController.removeproperty);
 

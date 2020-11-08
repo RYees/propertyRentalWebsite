@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/property', propertyRouter);
+//
 
 
 app.use(jwt({ secret: jwt_key, algorithms: ['HS256'] })
@@ -37,7 +37,7 @@ app.use(jwt({ secret: jwt_key, algorithms: ['HS256'] })
 
 
 // login information state
-
+app.use('/property', propertyRouter);
 app.use('/broker', brokerRouter);
 app.use('/bauth', bauthRouter);
 app.use('/admin', adminRouter);

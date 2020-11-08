@@ -8,7 +8,7 @@ exports.routes = {
 
         '/Aauth/login',
         '/Aauth/signup',
-        '/property/search',
+        '/property',
         
     ]
 }

@@ -37,7 +37,7 @@ const brokerSchema = new mongoose.Schema({
   active: { type: Boolean, default: false },
   roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Roles' }],
   permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permissions' }],
-  last_login: { type: Date },
+  last_login: { type: Date, default: new Date() },
   created_at: { type: Date, default: new Date() },
   updated_at: { type: Date, default: new Date() }
 })

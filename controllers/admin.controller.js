@@ -131,7 +131,10 @@ exports.createbroker = async (req, res) => {
                 city: req.body.city,
                 area: req.body.area
             }],
-            photo: req.file.path
+            image: [{
+                photo:req.files[0] && req.files[0].path? req.files[0].path : '',
+                slip:req.files[1] && req.files[1].path? req.files[1].path : '',
+            }],
 
         });
         await broker.save()
@@ -146,27 +149,6 @@ exports.createbroker = async (req, res) => {
 
 
 
-}
-
-exports.updatebroker = async (req, res) => {
-
-    try {
-        let broker = await brokerModel.findById(req.params.id)
-        if (broker) {
-            broker = await brokerModel.updateOne({ _id: broker._id }, req.body)
-            return res.json(broker)
-        }
-
-        throw new Error('User dosen\'t exist')
-
-
-
-    } catch (error) {
-        res.status(400).json({
-            error: true,
-            message: error
-        })
-    }
 }
 
 exports.removebroker = async (req, res) => {
@@ -253,62 +235,6 @@ exports.getproperty = (req, res) => {
         });
 }
 
-exports.createproperty = (req, res) => {
-
-    brokerModel.findById(req.body.brokerId)
-        .then(broker => {
-            if (!broker) {
-                return res.status(404).json({
-                    message: 'Broker not found'
-                });
-            }
-            const property = new propertyModel({
-
-                _id: mongoose.Types.ObjectId(),
-                prop_type: req.body.prop_type,
-                address: [{
-                    sub_city: req.body.sub_city,
-                    city: req.body.city,
-                    area: req.body.area,
-                    coordinates: req.body.coordinates
-                }],
-                price: [{
-                    amount: req.body.amount,
-                    type: req.body.type
-                }],
-                prop_contents: [{
-                    bedrooms: req.body.bedrooms,
-                    bathrooms: req.body.bathrooms,
-                    no_of_floors: req.body.no_of_floors,
-                    amenities: req.body.amenities
-                }],
-                image: req.file.path,
-                area_in_m2: req.body.area_in_m2,
-                notes: req.body.notes,
-                broker: req.body.brokerId
-
-            });
-            return property.save()
-            //console.log(req.file);
-        })
-        .then(result => {
-            console.log(result);
-            res.status(201).json(result);
-        })
-        // res.json(property)
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err.message
-            });
-        });
-    res.status(201).json({
-        message: 'property was created',
-        //property:propertyj
-    });
-
-
-}
 
 exports.updatestatus = async (req, res) => {
     try {
@@ -327,27 +253,6 @@ exports.updatestatus = async (req, res) => {
     }
 }
 
-exports.updateproperty = async (req, res) => {
-
-    try {
-        let property = await propertyModel.findById(req.params.id)
-        if (property) {
-            property = await propertyModel.updateOne({ _id: property._id }, req.body)
-            return res.json(property)
-        }
-
-        throw new Error('User dosen\'t exist')
-
-
-
-    } catch (error) {
-        res.status(400).json({
-            error: true,
-            message: error
-        })
-    }
-}
-
 exports.removeproperty = async (req, res) => {
     try {
         let property = await propertyModel.findById(req.params.id)
@@ -361,38 +266,6 @@ exports.removeproperty = async (req, res) => {
 
     } catch (error) {
 
-    }
-}
-
-
-exports.searchproperty = async (req, res, next) => {
-    try {
-        const searchedFEILD = req.query.bname;
-        await propertyModel.find({ bname: { $regex: searchedFEILD, $options: '$i' } })
-            .then(data => {
-                res.send(data);
-                });
-    } catch (error) {
-        res.status(404).json({
-            error: true,
-            message: error.message
-        })
-    }
-}
-
-exports.searchbroker = async (req, res, next) => {
-    try {
-        const searchedFEILD = req.query.bname;
-        await brokerModel.find({ bname: { $regex: searchedFEILD, $options: '$i' } })
-            .then(data => {
-                res.send(data);
-                //res.json(property)
-            });
-    } catch (error) {
-        res.status(404).json({
-            error: true,
-            message: error.message
-        })
     }
 }
 
