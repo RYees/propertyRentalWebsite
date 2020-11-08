@@ -14,12 +14,6 @@ const permissions = [
     'hold property',
 
     'view property',
-    'create comment',
-    'view comment',
-    'update comment',
-    'remove comment',
-
-    'view any comment',
     'view profile',
     'update profile',
     'grant access',
@@ -58,13 +52,19 @@ const admins = [
         password: 'superuser',
         roles: ['admin']
     },
-   
+    {
+        name: 'bety',
+        username: 'bety',
+        email: 'ab@admin.com',
+        password: 'superuser',
+        roles: ['admin']
+    }
 ]
 const brokers = []
 
 const propertys = []
-const comments = []
 
 
 
-module.exports = { permissions, roles, brokers, propertys, comments, admins }
+
+module.exports = { permissions, roles, brokers, propertys,admins }

@@ -11,7 +11,7 @@ const adminModel = require('../models/admin-model')
 exports.login = async (req, res) => {
 
     try {
-              const broker = await brokerModel.findOne({
+            const broker = await brokerModel.findOne({
             username: req.body.username , active:"true"
         }).populate({ path: 'roles', populate: { path: 'permissions' } });
 
@@ -45,7 +45,7 @@ exports.login = async (req, res) => {
 exports.signup = async (req, res) => {
     try {
         //console.log(req.file);
-      let model= new roleModel({_id: new mongoose.Types.ObjectId('5f95908700c2d06190da0e33')})
+      let model= new roleModel({_id: new mongoose.Types.ObjectId('5fa7c3ea9a44a38c906e188d')})
             const broker = new brokerModel({
             _id: new mongoose.Types.ObjectId(),
             bname: [{
@@ -56,12 +56,15 @@ exports.signup = async (req, res) => {
             email: req.body.email,
             password: req.body.password,
             phone: req.body.phone,
+            image: [{
+                photo:req.files[0] && req.files[0].path? req.files[0].path : '',
+                slip:req.files[1] && req.files[1].path? req.files[1].path : '',
+            }],
             address: [{
                 sub_city: req.body.sub_city,
                 city: req.body.city,
                 area: req.body.area
             }],
-           // photo: req.file.path,
             roles:model._id,
         });
         

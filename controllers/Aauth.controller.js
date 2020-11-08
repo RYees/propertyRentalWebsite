@@ -1,6 +1,5 @@
 var jwt = require('jsonwebtoken');
 const Joi = require('joi');
-
 const { jwt_key } = require('../config/vars')
 const adminModel = require('../models/admin-model')
 

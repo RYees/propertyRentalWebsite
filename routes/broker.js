@@ -8,39 +8,30 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 var multer = require('multer');
 const brokerModel = require("../models/broker-model");
+
 var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/broPhotos')
+    destination: function (req, file, cb) {
+      cb(null, 'public/images/')
     },
-    filename: (req, file, cb) => {
-        //cb(null,new Date().toISOString()+ file.originalname);
-        cb(null, file.fieldname + '-' + Date.now() + file.originalname)
-    }
-});
-const fileFilter = (req, file, cb) => {
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + file.originalname)
+    },
+      });
+  const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
         cb(null, true);
     } else {
         cb(new Error('Only jpeg or png mimetype is accepted'), false);
     }
-
 };
-/*var up = function (req,res) {
-    upload(req,res,function (err) {
-        if(err){
-            return res,send("error uploading file");
-        }
-        res.end("File is uploaded")
-    });
-}/*/
-var upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 }, fileFilter: fileFilter });
-//var upload = multer({ storage : storage }).array('file',2);
+    var upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 }, fileFilter: fileFilter });
 
-//router.get('/',/* hasPermissions(['view broker'])*/brokerController.All);
 
+
+    
 router.get('/profile', hasPermissions(['view broker']), brokerController.profile);
 
-//router.post('/', upload.single('photo'), hasPermissions(['view broker']), brokerController.create);
+router.patch('/propertyStatus/:id', hasPermissions(['hold property']),brokerController.changestatus);
 
 router.patch('/personalInfo', hasPermissions(['update broker']), brokerController.update);
 
@@ -48,7 +39,7 @@ router.delete('/deleteAccount', hasPermissions(['remove broker']), brokerControl
 
 router.get('/getproperty', hasPermissions(['view property']), brokerController.getproperty);
 
-router.post('/createproperty', hasPermissions(['create property']),upload.single("image"),brokerController.createproperty);
+router.post('/createproperty', hasPermissions(['create property']),upload.array('image', 3),brokerController.createproperty);
 
 router.patch('/updateproperty/:id',hasPermissions(['update property']),brokerController.updateproperty);
 
@@ -56,3 +47,4 @@ router.delete('/deleteproperty/:id', hasPermissions(['remove property']),brokerC
 
 
 module.exports = router;
+

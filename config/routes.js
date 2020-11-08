@@ -8,12 +8,7 @@ exports.routes = {
 
         '/Aauth/login',
         '/Aauth/signup',
-        //'/Aauth/forget-password',
-        //'/Aauth/reset-password',
-
-
         '/property/search',
-        '/comment'
-
+        
     ]
 }

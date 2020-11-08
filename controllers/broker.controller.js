@@ -102,7 +102,11 @@ try{
                     no_of_floors: req.body.no_of_floors,
                     amenities: req.body.amenities
                 }],
-                image: req.file.path,
+                image:[{
+                    image1:req.files[0] && req.files[0].path? req.files[0].path : '',
+                    image2:req.files[1] && req.files[1].path? req.files[1].path : '',
+                    image3:req.files[2] && req.files[2].path? req.files[2].path : '' 
+                }],
                 area_in_m2: req.body.area_in_m2,
                 notes: req.body.notes,
                 broker: req.user._id
@@ -176,4 +180,20 @@ exports.removeproperty = async (req, res) => {
     }
 }
 
+exports.changestatus = async (req, res) => {
+    try {
+        let property = await propertyModel.findById(req.params.id)
+        if (property) {
+            property = await propertyModel.updateOne({ _id: property._id }, { $set: { active: "false" } });
+            return res.json(property)
+        } 
+        throw new Error('Update Unsuccessfull')
+
+    } catch (error) {
+        res.status(400).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
 

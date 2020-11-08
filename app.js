@@ -3,8 +3,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var jwt = require('express-jwt');
-var fs = require('fs');
-var multer = require('multer');
 
 const mongoose = require('./config/mongoose');
 const { jwt_key, port } = require('./config/vars');
@@ -16,7 +14,6 @@ var bauthRouter = require('./routes/bauth');
 var AauthRouter = require('./routes/Aauth');
 var brokerRouter = require('./routes/broker');
 var propertyRouter = require('./routes/property');
-var commentRouter = require('./routes/comment');
 var adminRouter = require('./routes/admin');
 
 
@@ -33,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/property', propertyRouter);
-app.use('/comment', commentRouter);
+
 
 app.use(jwt({ secret: jwt_key, algorithms: ['HS256'] })
     .unless({ path: routes.public })); // Auth

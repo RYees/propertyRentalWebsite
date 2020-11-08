@@ -41,7 +41,6 @@ exports.connect = () => {
       await migration.migrateRoles()
       await migration.migrateBrokers()
       await migration.migratePropertys()
-      await migration.migrateComments()
       await migration.migrateAdmins()
     });
   return mongoose.connection;

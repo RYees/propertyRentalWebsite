@@ -15,15 +15,19 @@ const addressSchema = new mongoose.Schema({
   city: reqString,
   area: reqString
 })
+const imageSchema = new mongoose.Schema({
+  photo: reqString,
+  slip: reqString,
+  })
 const brokerSchema = new mongoose.Schema({
 
   //_id: mongoose.Schema.Types.ObjectId,
   bname: [bnameSchema],
-  username: { type: String, default: '' },
+  username: { type: String, default: '',required:true},
   email: { type: String, unique: true, trim: true, lowercase: true, required: true},
-  phone: { type: String, default: '' },
+  phone: { type: String, default: '',required:true},
   address: [addressSchema],
-  photo: { type: String, default: '' },
+  image: [imageSchema],
   company: { type: String, default: '' },
   about: { type: String, default: '' },
   rating: { type: String, default: '' },
@@ -31,10 +35,8 @@ const brokerSchema = new mongoose.Schema({
   password: { type: String, required: true, minlength: 8, maxlength: 128 },
   password_changed_at: { type: Date },
   active: { type: Boolean, default: false },
-  push_token: { type: String, default: '' },
   roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Roles' }],
   permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permissions' }],
-  archived: { type: Boolean, default: false },
   last_login: { type: Date },
   created_at: { type: Date, default: new Date() },
   updated_at: { type: Date, default: new Date() }

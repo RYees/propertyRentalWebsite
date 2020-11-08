@@ -59,9 +59,9 @@ exports.get = (req, res) => {
         });
 }
 
-exports.create = async (req, res, next) => {
-
-    await brokerModel.findById(req.body.brokerId)
+exports.create = (req, res, next) => {
+ 
+     brokerModel.findById(req.body.brokerId)
         .then(broker => {
             if (!broker) {
                 return res.status(404).json({
@@ -88,14 +88,23 @@ exports.create = async (req, res, next) => {
                     no_of_floors: req.body.no_of_floors,
                     amenities: req.body.amenities
                 }],
-                image: req.file.path,
+                image:[{
+                    image1:req.files[0] && req.files[0].path ? req.files[0].path : '',
+                    image2:req.files[1] && req.files[1].path? req.files[1].path : '',
+                    image3:req.files[2] && req.files[2].path? req.files[2].path : '' 
+                }],
+               
                 area_in_m2: req.body.area_in_m2,
                 notes: req.body.notes,
                 broker: req.body.brokerId
 
             });
-            return property.save()
-            console.log(req.file);
+            // var fileInfo = req.files;
+            // var title = req.body.title;
+            //   console.log(title);
+            //   res.send(fileInfo);
+        return property.save()
+          console.log(req.files);
         })
         .then(result => {
             console.log(result);
@@ -105,7 +114,7 @@ exports.create = async (req, res, next) => {
         .catch(err => {
             console.log(err);
             res.status(500).json({
-                error: err
+                error: err.message
             });
         });
     res.status(201).json({

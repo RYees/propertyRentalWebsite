@@ -22,12 +22,17 @@ const addressSchema = new mongoose.Schema({
   area: reqString,
   coordinates: { type: String, default: '' }
 })
+const imageSchema = new mongoose.Schema({
+  image1: reqString,
+  image2: reqString,
+  image3: reqString,
+  })
 const propertySchema = new mongoose.Schema({
   //_id: mongoose.Schema.Types.ObjectId,
   prop_type: { type: String, default: '' },
   address: [addressSchema],
   price: [priceSchema],
-  image: { type: String, default: '' },
+  image: [imageSchema],
   prop_contents: [hcontentSchema],
   notes: { type: String, default: '' },
   area_in_m2: { type: String, required: true },

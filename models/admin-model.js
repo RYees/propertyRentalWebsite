@@ -5,16 +5,14 @@ const bcrypt = require('bcryptjs')
 
 
 const adminSchema = new mongoose.Schema({
-  //_id: mongoose.Schema.Types.ObjectId,
-  name: { type: String, default: '' },
-  username: { type: String, default: '' },
+  name: { type: String, default: '',required:true },
+  username: { type: String, default: '' ,required:true},
   email: { type: String, unique: true, trim: true, lowercase: true, required: true },
   password: { type: String, required: true, minlength: 8, maxlength: 128 },
   password_changed_at: { type: Date },
   roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Roles' }],
   permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permissions' }],
   fcm: { type: String, default: '' },
-  archived: { type: Boolean, default: false },
   last_login: { type: Date },
   created_at: { type: Date, default: new Date() },
   updated_at: { type: Date, default: new Date() }
