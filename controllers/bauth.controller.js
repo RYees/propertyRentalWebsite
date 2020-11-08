@@ -44,7 +44,7 @@ exports.login = async (req, res) => {
 }
 exports.signup = async (req, res) => {
     try {
-        //console.log(req.file);
+        
       let model= new roleModel({_id: new mongoose.Types.ObjectId('5fa7c3ea9a44a38c906e188d')})
             const broker = new brokerModel({
             _id: new mongoose.Types.ObjectId(),

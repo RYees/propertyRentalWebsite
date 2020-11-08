@@ -1,4 +1,6 @@
 var router = require("express-promise-router")();
+const  {brokerFormRequest} = require('../middlewares/form-request/broker')
+
 var fs = require('fs');
 var multer = require('multer');
 const brokerModel = require("../models/broker-model");
@@ -20,7 +22,7 @@ const fileFilters = (req, file, cb) => {
         cb(new Error('Only jpeg or png mimetype is accepted'), false);
     }
 
-};
+};//
 
 var upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 }, fileFilters: fileFilters });
 

@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(jwt({ secret: jwt_key, algorithms: ['HS256'] })
-    .unless({ path: routes.public })); // Auth
+    .unless({ path: routes.public })); 
 
 
 // login information state

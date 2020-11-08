@@ -1,6 +1,5 @@
 var router = require("express-promise-router")();
 
-const { userFormRequest } = require('../middlewares/form-request/user')
 const { hasPermissions } = require('../middlewares/auth');
 const adminController = require('../controllers/admin.controller')
 

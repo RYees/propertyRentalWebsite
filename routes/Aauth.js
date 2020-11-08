@@ -1,9 +1,9 @@
 var router = require("express-promise-router")();
 
-const { authFormRequest } = require('../middlewares/form-request/auth')
+const { adminFormRequest } = require('../middlewares/form-request/admin')
 const AauthController = require('../controllers/Aauth.controller')
 
-/* GET users listing. authFormRequest('createUser'),*/
+/* GET users listing. adminFormRequest('createAdmin'),,*/
 router.post('/login', AauthController.login);
 router.post('/signup', AauthController.signup);
 

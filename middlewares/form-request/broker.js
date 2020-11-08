@@ -1,15 +1,15 @@
 const Joi = require('joi');
 
-
 exports.brokerFormRequest = schemaName => async (req,res,next) => {
     let validationObjects = {
         createBroker: () => 
             Joi.object({
-                bname: Joi.string()
+                firstName: Joi.string()
                     .alphanum()
                     .min(3)
                     .max(30)
                     .required(),
+            
                 username: Joi.string()
                     .alphanum()
                     .min(3)
@@ -18,9 +18,7 @@ exports.brokerFormRequest = schemaName => async (req,res,next) => {
             
                 password: Joi.string().required()
                     .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
-            
-                repeat_password: Joi.ref('password'),
-            
+                        
                 email: Joi.string()
                     .email()
             }),

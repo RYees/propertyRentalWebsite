@@ -38,6 +38,7 @@ exports.login = async (req, res) => {
 exports.signup = async (req, res) => {
 
     try {
+        let model= new roleModel({_id: new mongoose.Types.ObjectId('5fa7c3ea9a44a38c906e188a')})
         const admin = await adminModel.create(req.body)
         res.json(admin)
     } catch (error) {
