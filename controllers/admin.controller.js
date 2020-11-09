@@ -193,12 +193,28 @@ exports.getproperty = (req, res) => {
 }
 
 
-exports.updatestatus = async (req, res) => {
+exports.updateBstatus = async (req, res) => {
     try {
         let broker = await brokerModel.findById(req.params.id)
         if (broker) {
             broker = await brokerModel.updateOne({ _id: broker._id }, { $set: { active: "true" } });
             return res.json(broker)
+        } 
+        throw new Error('Update Unsuccessfull')
+
+    } catch (error) {
+        res.status(400).json({
+            error: true,
+            message: error.message
+        })
+    }
+}
+exports.updatePstatus = async (req, res) => {
+    try {
+        let property = await propertyModel.findById(req.params.id)
+        if (property) {
+            property = await propertyModel.updateOne({ _id: property._id }, { $set: { active: "true" } });
+            return res.json(property)
         } 
         throw new Error('Update Unsuccessfull')
 

@@ -51,6 +51,7 @@ exports.signup = async (req, res) => {
           });
          
           await admin.save()
+        
         res.json(admin)
     } catch (error) {
         res.status(400).json({
@@ -63,17 +64,12 @@ exports.signup = async (req, res) => {
 
 exports.logout = async (req, res) => {
     try {
-
-        const admin = await adminModel.create(req.body)
-        // clean up
-        res.json(admin)
+       res.redirect( "/property" );
     } catch (error) {
         res.status(400).json({
             error: true,
-            message: error
+            message: error.message
         })
     }
 
 }
-
-

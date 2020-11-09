@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const roleModel = require('../models/role-model')
 const brokerModel = require('../models/broker-model')
 const propertyModel = require('../models/property-model')
+//const { notification } = require('../config/pushNotification');
+
 
 exports.profile = async (req, res) => {
 
@@ -114,16 +116,28 @@ try{
             });
             
            property.save()
-           return res.json(property)
-            //console.log(req.file);
-        } catch (error) {
-            
+        // let admins = await adminModel.find({})
+        // let fcmIds = await Promise.all(admins.map(admin => admin.fcm))
+        // fcmIds = fcmIds.filter(el => el != null)
+        // let notifiation_obj = {
+        //     title: "something",
+        //     body: "something"
+        // }
+        // var message = { tokens: fcmIds, notification: notifiation_obj }
+        // notification(message)
 
+           return res.json(property)
+        }catch (error) {
+            res.status(400).json({ 
+                error: true,
+                message: error.message
+            })
         }
     }
 
 
 exports.searchproperty = async (req, res) => {
+    try{
     const query = req.query.prop_type || req.query.sub_city || req.query.city
         || req.query.area || req.query.firstName;
 
@@ -133,14 +147,18 @@ exports.searchproperty = async (req, res) => {
             { "address.sub_city": { $regex: query, $options: '$i' } },
             { "address.city": { $regex: query, $options: '$i' } },
             { "address.area": { $regex: query, $options: '$i' } }
-            //{ "broker.bname": { $regex: query, $options: '$i' } }
-
+            
         ]
     }).select("prop_type  image")
-        .then(data => {
-            res.send(data);
+        // .then(data => {
+        //     res.send(data);
+        // })
+    }catch (error) {
+        res.status(400).json({ 
+            error: true,
+            message: error.message
         })
-
+    }
 }
 
 exports.updateproperty = async (req, res) => {

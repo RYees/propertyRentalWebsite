@@ -16,9 +16,7 @@ exports.login = async (req, res) => {
         }).populate({ path: 'roles', populate: { path: 'permissions' } });
 
         if (broker && await broker.verifyPassword(req.body.password)) {
-            // 1. map through all roles
-            // 2. find each permissions inside the role
-            // 3. combine permissions
+            
             let permissions = broker._doc.roles.reduce((prev, next) => {
                 return [...prev, ...next.permissions.map(permission => permission.name)]
             }, [])
@@ -92,12 +90,11 @@ exports.signup = async (req, res) => {
 
 exports.logout = async (req, res) => {
     try {
-        req.logout();
-        res.redirect( "/bauth/login" );
+       res.redirect( "/property" );
     } catch (error) {
         res.status(400).json({
             error: true,
-            message: error
+            message: error.message
         })
     }
 

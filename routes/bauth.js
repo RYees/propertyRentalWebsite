@@ -28,5 +28,5 @@ var upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 }, f
 
 router.post('/login', bauthController.login);
 router.post('/signup',upload.array('image', 3),bauthController.signup);
-
+router.get('/logout',bauthController.logout);
 module.exports = router;

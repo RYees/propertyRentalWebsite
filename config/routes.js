@@ -3,10 +3,13 @@ exports.routes = {
 
         '/bauth/login',
         '/bauth/signup',
+        '/bauth/logout',
         
         '/Aauth/login',
         '/Aauth/signup',
-        '/property'
+        '/Aauth/logout',
+        '/property',
+        '/property/search'
         
     ]
 }
