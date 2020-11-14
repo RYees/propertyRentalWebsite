@@ -37,7 +37,7 @@ const propertySchema = new mongoose.Schema({
   area_in_m2: { type: String, required: true },
   active: { type: Boolean, default: false },
   broker: { type: mongoose.Schema.Types.ObjectId, ref: 'Broker', required: true },
-  created_at: { type: Date, default: new Date() },
+  created_at: { type: Date, default: new Date()},
   updated_at: { type: Date, default: new Date() }
 })
 

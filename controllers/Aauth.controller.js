@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { jwt_key } = require('../config/vars')
+
 const mongoose = require('mongoose')
 const adminModel = require('../models/admin-model')
 const roleModel = require('../models/role-model')
@@ -39,15 +40,14 @@ exports.login = async (req, res) => {
 exports.signup = async (req, res) => {
 
   try {
-        
-        let model= new roleModel({_id: new mongoose.Types.ObjectId('5fa7c3ea9a44a38c906e188a')})
+         let role = await roleModel.findOne({name:"admin"})
               const admin = new adminModel({
               _id: new mongoose.Types.ObjectId(),
               name: req.body.name,
               username: req.body.username,
               email: req.body.email,
               password: req.body.password,
-              roles:model._id,
+              roles:role._id,
           });
          
           await admin.save()

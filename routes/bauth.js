@@ -26,7 +26,7 @@ const fileFilters = (req, file, cb) => {
 
 var upload = multer({ storage: storage, limits: { fileSize: 1024 * 1024 * 5 }, fileFilters: fileFilters });
 
-router.post('/login', bauthController.login);
-router.post('/signup',upload.array('image', 3),bauthController.signup);
+router.post('/login',brokerFormRequest('loginBroker'), bauthController.login);
+router.post('/signup',upload.array('image', 3),brokerFormRequest('createBroker'),bauthController.signup);
 router.get('/logout',bauthController.logout);
 module.exports = router;

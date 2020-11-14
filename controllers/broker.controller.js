@@ -3,14 +3,15 @@ const mongoose = require('mongoose')
 const roleModel = require('../models/role-model')
 const brokerModel = require('../models/broker-model')
 const propertyModel = require('../models/property-model')
-//const { notification } = require('../config/pushNotification');
+const adminModel = require('../models/admin-model')
+const { notification } = require('../config/pushNotification');
 
 
 exports.profile = async (req, res) => {
 
     try {
-        //console.log(req.params);
         const broker = await brokerModel.findById(req.user._id)
+        .select("bname.firstName  bname.lastName  username email  phone  company  image.photo about  favorites  rating   address.sub_city  address.city  address.area")
         res.json(broker)
     } catch (error) {
         res.status(404).json({
@@ -54,32 +55,25 @@ exports.remove = async (req, res) => {
         throw new Error('Broker doesn\t exist')
 
     } catch (error) {
-
+        res.status(400).json({
+            error: true,
+            message: error.message
+        })
     }
 }
 
-exports.getproperty = (req, res) => {
-        const property = propertyModel.find({broker:req.user._id})
-        .select("broker  _id  prop_type  price.amount  price.type  prop_contents.bedrooms  prop_contents.bathrooms  prop_contents.no_of_floors  prop_contents.amenities  address.sub_city  address.city address.area  address.coordinates  image  notes  area_in_m2")
-        .populate('broker', 'username')
-        .exec()
-        .then(property => {
-            if (!property) {
-                return res.status(404).json({
-                    message: "Property not found"
-                });
-            }
-            res.status(200).json({
-                property: property,
-            });
+exports.getproperty = async (req, res) => {
+    try{
+        const property = await propertyModel.find({broker:req.user._id})
+        .select("_id  prop_type  price.amount  price.type  prop_contents.bedrooms  prop_contents.bathrooms  prop_contents.no_of_floors  prop_contents.amenities  address.sub_city  address.city address.area  address.coordinates  image  notes  area_in_m2")
+          res.json(property)
+        
+    } catch (error) {
+        res.status(400).json({
+            error: true,
+            message: error.message
         })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-                //message: error.message
-            });
-        });
+    }
 }
 
 
@@ -116,15 +110,16 @@ try{
             });
             
            property.save()
-        // let admins = await adminModel.find({})
-        // let fcmIds = await Promise.all(admins.map(admin => admin.fcm))
-        // fcmIds = fcmIds.filter(el => el != null)
-        // let notifiation_obj = {
-        //     title: "something",
-        //     body: "something"
-        // }
-        // var message = { tokens: fcmIds, notification: notifiation_obj }
-        // notification(message)
+
+        let admins = await adminModel.find({})
+        let fcmIds = await Promise.all(admins.map(admin => admin.fcm))
+        fcmIds = fcmIds.filter(el => el != null)
+        let notifiation_obj = {
+            title: "something",
+            body: "something"
+        }
+        var message = { tokens: fcmIds, notification: notifiation_obj }
+        notification(message)
 
            return res.json(property)
         }catch (error) {
@@ -139,7 +134,7 @@ try{
 exports.searchproperty = async (req, res) => {
     try{
     const query = req.query.prop_type || req.query.sub_city || req.query.city
-        || req.query.area || req.query.firstName;
+        || req.query.area;
 
     propertyModel.find({
         $or: [
@@ -150,9 +145,6 @@ exports.searchproperty = async (req, res) => {
             
         ]
     }).select("prop_type  image")
-        // .then(data => {
-        //     res.send(data);
-        // })
     }catch (error) {
         res.status(400).json({ 
             error: true,
@@ -164,9 +156,9 @@ exports.searchproperty = async (req, res) => {
 exports.updateproperty = async (req, res) => {
 
     try {
-        let property = await propertyModel.findById({_id: req.params.id , broker: req.user._id})
+        let property = await propertyModel.findById({_id: req.params.id})
         if (property) {
-            property = await propertyModel.updateOne({broker: require.user._id})
+            property = await propertyModel.updateOne({_id:property._id},req.body)
             return res.json(property)
         }
 
@@ -182,10 +174,10 @@ exports.updateproperty = async (req, res) => {
 
 exports.removeproperty = async (req, res) => {
     try {
-        let property = await propertyModel.findById({_id: req.params.id, broker: req.user._id})
+        let property = await propertyModel.findById({_id: req.params.id})
         if (property) {
             const user = this
-            await propertyModel.remove({broker: req.user._id})
+            await propertyModel.remove({_id: property._id})
             return res.json(property)
         }
         throw new Error('Property doesn\t exist')

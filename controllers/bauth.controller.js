@@ -42,8 +42,8 @@ exports.login = async (req, res) => {
 }
 exports.signup = async (req, res) => {
     try {
-        
-      let model= new roleModel({_id: new mongoose.Types.ObjectId('5fa7c3ea9a44a38c906e188d')})
+      
+        let role = await roleModel.findOne({name:"broAct"})
             const broker = new brokerModel({
             _id: new mongoose.Types.ObjectId(),
             bname: [{
@@ -63,7 +63,7 @@ exports.signup = async (req, res) => {
                 city: req.body.city,
                 area: req.body.area
             }],
-            roles:model._id,
+            roles:role._id,
         });
         
         await broker.save()

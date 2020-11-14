@@ -7,9 +7,9 @@ const mongoose = require('mongoose')
 exports.adminprofile = async (req, res) => {
 
     try {
-        //console.log(req.params);
         const admin = await adminModel.findById(req.user._id)
-        res.json(admin)
+        .select("name username email ")
+         res.json(admin)
     } catch (error) {
         res.status(404).json({
             error: true,
@@ -29,8 +29,6 @@ exports.profileupdate = async (req, res) => {
         }
 
         throw new Error('Admin dosen\'t exist')
-
-
 
     } catch (error) {
         res.status(400).json({
@@ -149,7 +147,7 @@ exports.getAllpropertys = async (req, res) => {
 
         const options = {
             sort: Object.values(sort).length > 0 ? sort : {
-                'created_at': -1
+                'created_at': desc
             },
             page: req.query.page || 1,
             limit: req.query.limit || 10,
@@ -168,28 +166,19 @@ exports.getAllpropertys = async (req, res) => {
 
 }
 
-exports.getproperty = (req, res) => {
-    const property = propertyModel.findById(req.params.id)
-        .select("broker  _id  bname  prop_type  address  price ")
+exports.getproperty = async (req, res) => {
+    try{
+    const property = await propertyModel.findById(req.params.id)
+        .select("broker  prop_type  address.sub_city  address.city  address.area  price.amount  price.type  prop_contents.amenities  prop_contents.bedrooms  prop_contents.bathrooms  prop_contents.no_of_floors  image.image1  image.image2  image.image3  area_in_m2")
         .populate('broker', 'bname')
-        .exec()
-        .then(property => {
-            if (!property) {
-                return res.status(404).json({
-                    message: "Property not found"
-                });
-            }
-            res.status(200).json({
-                property: property,
-            });
+        res.json(property)
+        
+    } catch (error) {
+        res.status(400).json({
+            error: true,
+            message: error.message
         })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-                //message: error.message
-            });
-        });
+    }
 }
 
 

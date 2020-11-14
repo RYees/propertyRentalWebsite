@@ -29,7 +29,7 @@ var storage = multer.diskStorage({
 
 
     
-router.get('/profile', hasPermissions(['view broker']), brokerController.profile);
+router.get('/profile', hasPermissions(['view profile']), brokerController.profile);
 
 router.patch('/propertyStatus/:id', hasPermissions(['hold property']),brokerController.changestatus);
 

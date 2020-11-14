@@ -5,33 +5,41 @@ const brokerModel = require('../models/broker-model')
 const mongoose = require('mongoose')
 
 
-exports.getAll = (req, res, next) => {
-    const property = propertyModel.find()
-        .select("broker  _id  bname  prop_type  address  price image ")
+exports.getAll =async (req, res, next) => {
+    try{
+    const property = await propertyModel.find({active:"true"})
+        .select("broker  _id  prop_type  address  price image ")
         .populate('broker', 'bname')
-        .exec()
-        .then(docs => {
-            res.status(200).json({
-                propertys: docs.map(doc => {
-                    return {
-                        id: doc._id,
-                        broker: doc.broker,
-                        bname: doc.bname,
-                        prop_type: doc.prop_type,
-                        address: doc.address,
-                        price: doc.price,
-                        image: doc.image
-                    }
-                })
-            });
+        res.json(property)
+        
+    } catch (error) {
+        res.status(400).json({
+            error: true,
+            message: error.message
         })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-                //message: error.message
-            });
-        });
+    }       // .exec()
+        // .then(docs => {
+        //     res.status(200).json({
+        //         propertys: docs.map(doc => {
+        //             return {
+        //                 id: doc._id,
+        //                 broker: doc.broker,
+        //                 bname: doc.bname,
+        //                 prop_type: doc.prop_type,
+        //                 address: doc.address,
+        //                 price: doc.price,
+        //                 image: doc.image
+        //             }
+        //         })
+        //     });
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        //     res.status(500).json({
+        //         error: err
+        //         //message: error.message
+        //     });
+        // });
 }
 exports.search = async (req, res) => {
     const query = req.query.prop_type || req.query.sub_city || req.query.city

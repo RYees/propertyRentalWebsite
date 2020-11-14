@@ -16,57 +16,12 @@ exports.adminFormRequest = schemaName => async (req,res,next) => {
             }),
         createAdmin: () => 
             Joi.object({
-                firstName: Joi.string().required(),
-                lastName: Joi.string()
-                    .alphanum()
-                    .min(3)
+                  name: Joi.string(),
+                  username: Joi.string()
+                     .alphanum()
+                     .min(3)
                     .max(30)
-                    .required(),
-                username: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
-                phone: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
-                address: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
-                image: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
-                company: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
-                about: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
-                rating: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
-                favorites: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
-                    username: Joi.string()
-                    .alphanum()
-                    .min(3)
-                    .max(30)
-                    .required(),
+                  .required(),
                 password: Joi.string().required()
                     .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
                                     
