@@ -133,7 +133,7 @@ exports.getAllpropertys = async (req, res) => {
 
         let sort = {}
         if (req.query.sort) {
-            sort[req.query.sort] = req.query.asc ? 1 : -1
+            sort[req.query.sort] = req.query.asc ? 1 : 1
         }
 
         let query = {}
@@ -147,7 +147,7 @@ exports.getAllpropertys = async (req, res) => {
 
         const options = {
             sort: Object.values(sort).length > 0 ? sort : {
-                'created_at': desc
+                'created_at': -1 
             },
             page: req.query.page || 1,
             limit: req.query.limit || 10,
