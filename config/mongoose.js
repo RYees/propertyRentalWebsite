@@ -26,8 +26,7 @@ if (env === 'development') {
  */
 exports.connect = () => {
   console.log('mongodb://127.0.0.1:27017/PRW');
-  mongoose
-    .connect('mongodb://127.0.0.1:27017/PRW', {
+  mongoose.connect('mongodb+srv://admin:kedja%231997@cluster0.0mapa.mongodb.net/PRW?retryWrites=true&w=majority', {
       useCreateIndex: true,
       keepAlive: 1,
       useNewUrlParser: true,
